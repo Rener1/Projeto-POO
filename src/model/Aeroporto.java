@@ -1,5 +1,7 @@
 package model;
 
+import repositorio.RepositorioAeroporto;
+
 public class Aeroporto {
     private String nome;
     private Localizacao localizacao;
@@ -7,6 +9,7 @@ public class Aeroporto {
     public Aeroporto(String nome,String cidade,String estado,char dirLat,int gLat,int mLat,double sLat,char dirLong,int gLong,int mLong,double sLong){
         this.nome = nome;
         this.localizacao = new Localizacao(cidade,estado,dirLat,gLat,mLat,sLat,dirLong,gLong,mLong,sLong);
+        RepositorioAeroporto.adicionarAeroporto(this);
     }
 
     public Localizacao getLocalizacao(){

@@ -1,5 +1,7 @@
 package model;
 
+import repositorio.RepositorioCliente;
+
 public class Cliente {
     private String nome;
     private int cpf;
@@ -7,6 +9,7 @@ public class Cliente {
     public Cliente(String nome, int cpf){
         this.nome = nome;
         this.cpf = cpf;
+        RepositorioCliente.adicionarCliente(this);
     }
 
     public void comprarPassagem(){}

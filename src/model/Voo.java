@@ -1,6 +1,8 @@
 package model;
 
 import org.jetbrains.annotations.NotNull;
+import repositorio.RepositorioVoo;
+
 import java.time.*;
 
 public class Voo {
@@ -25,6 +27,7 @@ public class Voo {
         this.dataChegada = dataSaida.plusMinutes((int) tempo);
         this.vagas1classe = aviao.getCapacidadePassageiros(0);
         this.vagas2classe = aviao.getCapacidadePassageiros(1);
+        RepositorioVoo.adicionarVoo(this);
     }
 
     public void adiarVoo(){}

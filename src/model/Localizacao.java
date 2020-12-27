@@ -14,6 +14,6 @@ public class Localizacao {
     }
 
     public double calcularDistancia(Localizacao lugarDestino){
-        return Math.sqrt(Math.pow(this.latitude.distanciaEntreCoordenadas(lugarDestino.latitude),2) + Math.pow(this.longetude.distanciaEntreCoordenadas(lugarDestino.longetude),2));
+        return Math.sqrt(Math.pow(latitude.distanciaEntreCoordenadas(lugarDestino.latitude),2) + Math.pow(longetude.distanciaEntreCoordenadas(lugarDestino.longetude),2));
     }
 }
