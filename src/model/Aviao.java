@@ -1,15 +1,24 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class Aviao {
     protected String modelo;
     protected String status;
+    protected Voo voo;
     protected double velocidadeCruzeiro;
     protected int[] capacidadePassageiros = new int[2];
     protected Localizacao localizacao;
 
+    public Aviao(@NotNull Localizacao localizacao){
+        this.voo = null;
+        this.status = "Parado";
+        this.localizacao = localizacao;
+    }
 
-    public void voar(){
-
+    public void voar(Voo voo){
+        this.voo = voo;
+        this.status = "Em voo";
     }
 
     public String getModelo() {
@@ -22,6 +31,14 @@ public abstract class Aviao {
 
     public int getCapacidadePassageiros(int classe) {
         return capacidadePassageiros[classe];
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Voo getVoo() {
+        return voo;
     }
 
     public Localizacao getLocalizacao() {

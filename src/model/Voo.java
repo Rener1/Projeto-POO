@@ -1,5 +1,6 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
 import java.time.*;
 
 public class Voo {
@@ -13,13 +14,13 @@ public class Voo {
     private int vagas1classe;
     private int vagas2classe;
 
-    public Voo(int id, Aeroporto origem, Aeroporto destino, Aviao aviao, int ano, int mes, int dia, int hora, int minutos){
+    public Voo(int id, @NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
         this.status = "agendado";
         this.id = id;
         this.origem = origem;
         this.destino = destino;
         this.aviao = aviao;
-        this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minutos);
+        this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minuto);
         double tempo = origem.getLocalizacao().calcularDistancia(destino.getLocalizacao()) / aviao.getVelocidadeCruzeiro() * 60;
         this.dataChegada = dataSaida.plusMinutes((int) tempo);
         this.vagas1classe = aviao.getCapacidadePassageiros(0);
