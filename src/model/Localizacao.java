@@ -16,4 +16,12 @@ public class Localizacao {
     public double calcularDistancia(Localizacao lugarDestino){
         return Math.sqrt(Math.pow(latitude.distanciaEntreCoordenadas(lugarDestino.latitude),2) + Math.pow(longetude.distanciaEntreCoordenadas(lugarDestino.longetude),2));
     }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
 }

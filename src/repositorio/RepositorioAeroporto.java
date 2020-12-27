@@ -4,7 +4,7 @@ import model.Aeroporto;
 import java.util.ArrayList;
 
 public class RepositorioAeroporto {
-    private static ArrayList<Aeroporto> aeroportos = new ArrayList<>();
+    private static final ArrayList<Aeroporto> aeroportos = new ArrayList<>();
 
     public static void adicionarAeroporto(Aeroporto aeroporto){
         aeroportos.add(aeroporto);

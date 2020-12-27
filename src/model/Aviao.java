@@ -1,24 +1,31 @@
 package model;
 
 import org.jetbrains.annotations.NotNull;
+import repositorio.RepositorioAviao;
 
 public abstract class Aviao {
     protected String modelo;
+    protected int id;
     protected String status;
     protected Voo voo;
     protected double velocidadeCruzeiro;
     protected int[] capacidadePassageiros = new int[2];
     protected Localizacao localizacao;
 
-    public Aviao(@NotNull Localizacao localizacao){
+    public Aviao(@NotNull Localizacao localizacao,int id){
+        this.id = id;
         this.voo = null;
         this.status = "Parado";
         this.localizacao = localizacao;
+        RepositorioAviao.adicionarAviao(this);
     }
 
     public void voar(Voo voo){
         this.voo = voo;
         this.status = "Em voo";
+    }
+    public int getId(){
+        return id;
     }
 
     public String getModelo() {

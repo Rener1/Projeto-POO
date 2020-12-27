@@ -4,7 +4,7 @@ import model.Cliente;
 import java.util.ArrayList;
 
 public class RepositorioCliente {
-    private static ArrayList<Cliente> clientes = new ArrayList<>();
+    private static final ArrayList<Cliente> clientes = new ArrayList<>();
 
     public static void adicionarCliente(Cliente cliente){
         clientes.add(cliente);
@@ -21,7 +21,9 @@ public class RepositorioCliente {
 
     public static void atualizarCliente(int cpf, String nome){
         Cliente cliente = verificarCliente(cpf);
-        cliente.setNome(nome);
+        if (cliente != null) {
+            cliente.setNome(nome);
+        }
     }
 
     public static void deletarCliente(int cpf){

@@ -17,21 +17,41 @@ public class Voo {
     private int vagas2classe;
 
     public Voo(int id, @NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
-        this.status = "agendado";
+        this.status = "Agendado";
         this.id = id;
         this.origem = origem;
         this.destino = destino;
         this.aviao = aviao;
         this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minuto);
-        double tempo = origem.getLocalizacao().calcularDistancia(destino.getLocalizacao()) / aviao.getVelocidadeCruzeiro() * 60;
-        this.dataChegada = dataSaida.plusMinutes((int) tempo);
+        this.dataChegada = calcularDataChegada(dataSaida);
         this.vagas1classe = aviao.getCapacidadePassageiros(0);
         this.vagas2classe = aviao.getCapacidadePassageiros(1);
         RepositorioVoo.adicionarVoo(this);
     }
 
-    public void adiarVoo(){}
-    public void cancelarVoo(){}
+    public boolean adiarVoo(int ano,int mes,int dia,int hora,int minuto){
+        LocalDateTime data = LocalDateTime.of(ano,mes,dia,hora,minuto);
+        if (data.isAfter(dataSaida) && LocalDateTime.now().isBefore(dataSaida)){
+            this.dataSaida = data;
+            this.dataChegada = calcularDataChegada(dataSaida);
+            this.status = "Adiado para: "+ dataSaida;
+            return true;
+        }
+        return false;
+    }
+
+    public void cancelarVoo(){
+        this.status = "Cancelado";
+    }
+
+    private LocalDateTime calcularDataChegada(LocalDateTime dataSaida){
+        double distancia = origem.getLocalizacao().calcularDistancia(destino.getLocalizacao());
+        double velocidade = aviao.velocidadeCruzeiro;
+        double tempo = distancia / velocidade;
+        tempo *= 60;
+        LocalDateTime horaChegada = dataSaida.plusMinutes((int) tempo);
+        return horaChegada;
+    }
 
     public String getStatus() {
         return status;

@@ -4,7 +4,7 @@ import model.Voo;
 import java.util.ArrayList;
 
 public class RepositorioVoo {
-    private static ArrayList<Voo> voos = new ArrayList<>();
+    private static final ArrayList<Voo> voos = new ArrayList<>();
 
     public static void adicionarVoo(Voo voo){
         voos.add(voo);
