@@ -1,3 +1,5 @@
+package model;
+
 public class Coordenada {
     private int graus;
     private int minutos;
