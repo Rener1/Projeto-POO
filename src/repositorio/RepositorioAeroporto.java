@@ -10,9 +10,9 @@ public class RepositorioAeroporto {
         aeroportos.add(aeroporto);
     }
 
-    public static Aeroporto verificarAeroporto(String nome){
+    public static Aeroporto verificarAeroporto(int id){
         for (Aeroporto aeroporto: aeroportos){
-            if (aeroporto.getNome().equals(nome)){
+            if (aeroporto.getId() == id){
                 return aeroporto;
             }
         }

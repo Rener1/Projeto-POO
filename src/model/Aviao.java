@@ -5,15 +5,15 @@ import repositorio.RepositorioAviao;
 
 public abstract class Aviao {
     protected String modelo;
-    protected int id;
+    protected final int id;
     protected String status;
     protected Voo voo;
     protected double velocidadeCruzeiro;
-    protected int[] capacidadePassageiros = new int[2];
+    protected int[] capacidadePassageiros = new int[3];
     protected Localizacao localizacao;
 
-    public Aviao(@NotNull Localizacao localizacao,int id){
-        this.id = id;
+    public Aviao(@NotNull Localizacao localizacao){
+        this.id = IdGenerator.nextID("aviao");
         this.voo = null;
         this.status = "Parado";
         this.localizacao = localizacao;

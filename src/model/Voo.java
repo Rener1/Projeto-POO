@@ -7,25 +7,28 @@ import java.time.*;
 
 public class Voo {
     private String status;
-    private int id;
+    private final int id;
     private Aeroporto origem;
     private Aeroporto destino;
+    private double distancia;
     private Aviao aviao;
     private LocalDateTime dataSaida;
     private LocalDateTime dataChegada;
     private int vagas1classe;
-    private int vagas2classe;
+    private int vagasClasseExecutiva;
+    private int vagasClasseEconomica;
 
-    public Voo(int id, @NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
+    public Voo(@NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
         this.status = "Agendado";
-        this.id = id;
+        this.id = IdGenerator.nextID("voo");
         this.origem = origem;
         this.destino = destino;
+        this.distancia = calcularDistancia(origem.getLocalizacao(),destino.getLocalizacao());
         this.aviao = aviao;
         this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minuto);
         this.dataChegada = calcularDataChegada(dataSaida);
         this.vagas1classe = aviao.getCapacidadePassageiros(0);
-        this.vagas2classe = aviao.getCapacidadePassageiros(1);
+        this.vagasClasseExecutiva = aviao.getCapacidadePassageiros(1);
         RepositorioVoo.adicionarVoo(this);
     }
 
@@ -45,12 +48,26 @@ public class Voo {
     }
 
     private LocalDateTime calcularDataChegada(LocalDateTime dataSaida){
-        double distancia = origem.getLocalizacao().calcularDistancia(destino.getLocalizacao());
         double velocidade = aviao.velocidadeCruzeiro;
         double tempo = distancia / velocidade;
         tempo *= 60;
-        LocalDateTime horaChegada = dataSaida.plusMinutes((int) tempo);
-        return horaChegada;
+        return dataSaida.plusMinutes((int) tempo);
+    }
+
+    private double calcularDistancia(Localizacao origem,Localizacao destino){
+        return origem.calcularDistancia(destino);
+    }
+
+    public int ocuparVaga(int classe){
+        switch (classe){
+            case 0:
+                vagasClasseEconomica--;
+            case 1:
+                vagasClasseExecutiva--;
+            case 2:
+                vagas1classe--;
+        }
+        return 0;
     }
 
     public String getStatus() {
@@ -65,16 +82,12 @@ public class Voo {
         return vagas1classe;
     }
 
-    public void setVagas1classe(int vagas1classe) {
-        this.vagas1classe = vagas1classe;
+    public int getVagasClasseExecutiva() {
+        return vagasClasseExecutiva;
     }
 
-    public int getVagas2classe() {
-        return vagas2classe;
-    }
-
-    public void setVagas2classe(int vagas2classe) {
-        this.vagas2classe = vagas2classe;
+    public int getVagasClasseEconomica(){
+        return vagasClasseEconomica;
     }
 
     public int getId() {
@@ -99,5 +112,9 @@ public class Voo {
 
     public LocalDateTime getDataChegada() {
         return dataChegada;
+    }
+
+    public double getDistancia(){
+        return distancia;
     }
 }
