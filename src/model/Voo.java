@@ -2,8 +2,8 @@ package model;
 
 import org.jetbrains.annotations.NotNull;
 import repositorio.RepositorioVoo;
-
 import java.time.*;
+import java.util.ArrayList;
 
 public class Voo {
     private String status;
@@ -14,9 +14,9 @@ public class Voo {
     private Aviao aviao;
     private LocalDateTime dataSaida;
     private LocalDateTime dataChegada;
-    private int vagas1classe;
-    private int vagasClasseExecutiva;
-    private int vagasClasseEconomica;
+    private int[] vagas = new int[3];
+    private int[] assento = new int[3];
+    private ArrayList<Passagem> passagens;
 
     public Voo(@NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
         this.status = "Agendado";
@@ -27,8 +27,12 @@ public class Voo {
         this.aviao = aviao;
         this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minuto);
         this.dataChegada = calcularDataChegada(dataSaida);
-        this.vagas1classe = aviao.getCapacidadePassageiros(0);
-        this.vagasClasseExecutiva = aviao.getCapacidadePassageiros(1);
+        this.vagas[0] = aviao.getCapacidadePassageiros(0);
+        this.vagas[1] = aviao.getCapacidadePassageiros(1);
+        this.vagas[2] = aviao.getCapacidadePassageiros(2);
+        this.assento[1] = vagas[0];
+        this.assento[2] = vagas[0] + vagas[1];
+        passagens = new ArrayList<>();
         RepositorioVoo.adicionarVoo(this);
     }
 
@@ -58,16 +62,11 @@ public class Voo {
         return origem.calcularDistancia(destino);
     }
 
-    public int ocuparVaga(int classe){
-        switch (classe){
-            case 0:
-                vagasClasseEconomica--;
-            case 1:
-                vagasClasseExecutiva--;
-            case 2:
-                vagas1classe--;
-        }
-        return 0;
+    public int ocuparVaga(Passagem passagem,int classe){
+        vagas[classe]--;
+        assento[classe]++;
+        passagens.add(passagem);
+        return assento[classe];
     }
 
     public String getStatus() {
@@ -78,16 +77,8 @@ public class Voo {
         this.status = status;
     }
 
-    public int getVagas1classe() {
-        return vagas1classe;
-    }
-
-    public int getVagasClasseExecutiva() {
-        return vagasClasseExecutiva;
-    }
-
-    public int getVagasClasseEconomica(){
-        return vagasClasseEconomica;
+    public int getVagas(int classe) {
+        return vagas[classe];
     }
 
     public int getId() {

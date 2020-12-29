@@ -1,7 +1,6 @@
 package model;
 
 import repositorio.RepositorioCliente;
-
 import java.util.ArrayList;
 
 public class Cliente {
@@ -16,9 +15,12 @@ public class Cliente {
         RepositorioCliente.adicionarCliente(this);
     }
 
-    public void comprarPassagem(Passagem passagem){
-        passagem.validar();
-        minhasPassagens.add(passagem);
+    public boolean comprarPassagem(Passagem passagem){
+        if (passagem.validar()) {
+            minhasPassagens.add(passagem);
+            return true;
+        }
+        return false;
     }
 
     public Passagem verPassagem(Voo voo,int classe,double bagagem){

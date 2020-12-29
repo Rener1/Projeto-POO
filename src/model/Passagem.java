@@ -9,6 +9,7 @@ public class Passagem {
     private double bagagem;
     private double preco;
     private boolean valida = false;
+    private boolean lotado;
 
     Passagem(Cliente cliente,int id,Voo voo,int classe,double bagagem){
         this.proprietario = cliente;
@@ -17,11 +18,18 @@ public class Passagem {
         this.classe = classe;
         this.bagagem = bagagem;
         this.preco = calcularPreco();
+        if (voo.getVagas(classe) == 0){
+            lotado = true;
+        }
     }
 
-    public void validar(){
-        valida = true;
-        voo.ocuparVaga(classe);
+    public boolean validar(){
+        if (!lotado) {
+            valida = true;
+            assento = voo.ocuparVaga(this,classe);
+            return true;
+        }
+        return false;
     }
 
     private double calcularPreco(){
