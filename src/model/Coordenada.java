@@ -6,7 +6,7 @@ public class Coordenada {
     private double segundos;
     private char direcao;
 
-    Coordenada(int graus, int minutos, double segundos, char direcao){
+    public Coordenada(int graus, int minutos, double segundos, char direcao){
         this.graus = graus;
         this.minutos = minutos;
         this.segundos = segundos;

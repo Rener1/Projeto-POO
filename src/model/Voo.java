@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.ClasseLotadaException;
+import exceptions.DataInvalidaException;
 import org.jetbrains.annotations.NotNull;
 import repositorio.RepositorioVoo;
 import java.time.*;
@@ -21,14 +22,17 @@ public class Voo {
     private double precoBase;
     private ArrayList<Passagem> passagens;
 
-    public Voo(@NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
+    public Voo(@NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao,LocalDateTime data) throws DataInvalidaException {
+        if (data.isBefore(LocalDateTime.now())) {
+            throw new DataInvalidaException(LocalDateTime.now(),data);
+        }
         this.status = "Agendado";
         this.id = IdGenerator.nextID("voo");
         this.origem = origem;
         this.destino = destino;
         this.distancia = calcularDistancia(origem.getLocalizacao(),destino.getLocalizacao());
         this.aviao = aviao;
-        this.dataSaida = LocalDateTime.of(ano,mes,dia,hora,minuto);
+        this.dataSaida = data;
         this.dataChegada = calcularDataChegada(dataSaida);
         this.vagas[0] = aviao.getCapacidadePassageiros(0);
         this.vagas[1] = aviao.getCapacidadePassageiros(1);
@@ -40,8 +44,7 @@ public class Voo {
         RepositorioVoo.adicionarVoo(this);
     }
 
-    public boolean adiarVoo(int ano,int mes,int dia,int hora,int minuto){
-        LocalDateTime data = LocalDateTime.of(ano,mes,dia,hora,minuto);
+    public boolean adiarVoo(LocalDateTime data){
         if (data.isAfter(dataSaida) && LocalDateTime.now().isBefore(dataSaida)){
             this.dataSaida = data;
             this.dataChegada = calcularDataChegada(dataSaida);

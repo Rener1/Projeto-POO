@@ -7,10 +7,10 @@ public class Aeroporto {
     private Localizacao localizacao;
     private final int id;
 
-    public Aeroporto(String nome,String cidade,String estado,char dirLat,int gLat,int mLat,double sLat,char dirLong,int gLong,int mLong,double sLong){
+    public Aeroporto(String nome,Localizacao localizacao){
         this.nome = nome;
         this.id = IdGenerator.nextID("aeroporto");
-        this.localizacao = new Localizacao(cidade,estado,dirLat,gLat,mLat,sLat,dirLong,gLong,mLong,sLong);
+        this.localizacao = localizacao;
         RepositorioAeroporto.adicionarAeroporto(this);
     }
 

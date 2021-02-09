@@ -6,11 +6,11 @@ public class Localizacao {
     private Coordenada latitude;
     private Coordenada longetude;
 
-    public Localizacao(String cidade, String estado,char dirLat, int gLat, int mLat, double sLat, char dirLong, int gLong, int mLong, double sLong){
+    public Localizacao(String cidade, String estado,Coordenada latitude,Coordenada longetude){
         this.cidade = cidade;
         this.estado = estado;
-        this.latitude = new Coordenada(gLat,mLat,sLat,dirLat);
-        this.longetude = new Coordenada(gLong,mLong,sLong,dirLong);
+        this.latitude = latitude;
+        this.longetude = longetude;
     }
 
     public double calcularDistancia(Localizacao lugarDestino){
