@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.ClasseLotadaException;
 import org.jetbrains.annotations.NotNull;
 import repositorio.RepositorioVoo;
 import java.time.*;
@@ -16,6 +17,8 @@ public class Voo {
     private LocalDateTime dataChegada;
     private int[] vagas = new int[3];
     private int[] assento = new int[3];
+    private boolean[] lotado = new boolean[3];
+    private double precoBase;
     private ArrayList<Passagem> passagens;
 
     public Voo(@NotNull Aeroporto origem, @NotNull Aeroporto destino,@NotNull Aviao aviao, int ano, int mes, int dia, int hora, int minuto){
@@ -32,7 +35,8 @@ public class Voo {
         this.vagas[2] = aviao.getCapacidadePassageiros(2);
         this.assento[1] = vagas[0];
         this.assento[2] = vagas[0] + vagas[1];
-        passagens = new ArrayList<>();
+        this.precoBase = calcularPreco();
+        this.passagens = new ArrayList<>();
         RepositorioVoo.adicionarVoo(this);
     }
 
@@ -62,10 +66,26 @@ public class Voo {
         return origem.calcularDistancia(destino);
     }
 
+    private double calcularPreco(){
+        precoBase = 100;
+        precoBase += distancia * 0.03;
+        return precoBase;
+    }
+
+    public Passagem gerarPassagem(Cliente cliente,int classe) throws ClasseLotadaException {
+        if (isLotado(classe)) {
+            throw new ClasseLotadaException(this,classe);
+        }
+        return new Passagem(cliente, this,classe);
+    }
+
     public int ocuparVaga(Passagem passagem,int classe){
         vagas[classe]--;
         assento[classe]++;
         passagens.add(passagem);
+        if (vagas[classe] == 0){
+            lotado[classe] = true;
+        }
         return assento[classe];
     }
 
@@ -107,5 +127,13 @@ public class Voo {
 
     public double getDistancia(){
         return distancia;
+    }
+
+    public double getPrecoBase() {
+        return precoBase;
+    }
+
+    public boolean isLotado(int classe) {
+        return lotado[classe];
     }
 }

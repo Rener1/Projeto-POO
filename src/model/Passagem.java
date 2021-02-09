@@ -8,37 +8,25 @@ public class Passagem {
     private int assento;
     private double bagagem;
     private double preco;
-    private boolean valida = false;
-    private boolean lotado;
+    private boolean valida;
 
-    Passagem(Cliente cliente,int id,Voo voo,int classe,double bagagem){
+    Passagem(Cliente cliente,Voo voo,int classe) {
         this.proprietario = cliente;
-        this.id = id;
         this.voo = voo;
         this.classe = classe;
-        this.bagagem = bagagem;
-        this.preco = calcularPreco();
-        if (voo.getVagas(classe) == 0){
-            lotado = true;
-        }
+        this.preco = voo.getPrecoBase();
     }
 
-    public boolean validar(){
-        if (!lotado) {
-            valida = true;
-            assento = voo.ocuparVaga(this,classe);
-            return true;
-        }
-        return false;
+    public void validar(){
+        valida = true;
+        assento = voo.ocuparVaga(this,classe);
     }
 
-    private double calcularPreco(){
-        double preco;
-        preco = 80;
-        preco += voo.getDistancia() * 0.02;
+    private void calcularPreco(){
+        double preco = voo.getPrecoBase();
         preco += (bagagem -10) * 2;
         preco *= (classe +1);
-        return preco;
+        this.preco = preco;
     }
 
     public Cliente getProprietario() {
@@ -59,6 +47,11 @@ public class Passagem {
 
     public double getBagagem() {
         return bagagem;
+    }
+
+    public void setBagagem(int bagagem) {
+        this.bagagem = bagagem;
+        calcularPreco();
     }
 
     public double getPreco() {

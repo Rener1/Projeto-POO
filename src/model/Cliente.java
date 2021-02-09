@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.ClasseLotadaException;
 import repositorio.RepositorioCliente;
 import java.util.ArrayList;
 
@@ -7,25 +8,31 @@ public class Cliente {
     private String nome;
     private final String cpf;
     private int idPassagem = -1;
-    private ArrayList<Passagem> minhasPassagens = new ArrayList<>();
+    private Passagem passagemSelecionada;
+    private ArrayList<Passagem> minhasPassagens;
 
     public Cliente(String nome, String cpf){
         this.nome = nome;
         this.cpf = cpf;
+        this.minhasPassagens = new ArrayList<>();
         RepositorioCliente.adicionarCliente(this);
     }
 
-    public boolean comprarPassagem(Passagem passagem){
-        if (passagem.validar()) {
-            minhasPassagens.add(passagem);
-            return true;
+    public void comprarPassagem(int bagagem){
+        if (passagemSelecionada != null) {
+            passagemSelecionada.setBagagem(bagagem);
+            passagemSelecionada.validar();
+            minhasPassagens.add(passagemSelecionada);
+            passagemSelecionada = null;
         }
-        return false;
     }
 
-    public Passagem verPassagem(Voo voo,int classe,double bagagem){
-        Passagem passagem = new Passagem(this,nextID(),voo,classe,bagagem);
-        return passagem;
+    public void verPassagem(Voo voo,int classe) {
+        try {
+            passagemSelecionada = voo.gerarPassagem(this,classe);
+        } catch (ClasseLotadaException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private int nextID(){
