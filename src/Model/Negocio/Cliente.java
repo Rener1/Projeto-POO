@@ -1,7 +1,7 @@
-package model;
+package Model.Negocio;
 
-import exceptions.ClasseLotadaException;
-import repositorio.RepositorioCliente;
+import Model.Negocio.Exceptions.ClasseLotadaException;
+import Model.Dados.Repositorios.RepositorioClientes;
 import java.util.ArrayList;
 
 public class Cliente {
@@ -15,7 +15,7 @@ public class Cliente {
         this.nome = nome;
         this.cpf = cpf;
         this.minhasPassagens = new ArrayList<>();
-        RepositorioCliente.adicionarCliente(this);
+        RepositorioClientes.adicionar(this);
     }
 
     public void comprarPassagem(int bagagem){

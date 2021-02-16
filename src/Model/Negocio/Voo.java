@@ -1,9 +1,9 @@
-package model;
+package Model.Negocio;
 
-import exceptions.ClasseLotadaException;
-import exceptions.DataInvalidaException;
+import Model.Negocio.Exceptions.ClasseLotadaException;
+import Model.Negocio.Exceptions.DataInvalidaException;
 import org.jetbrains.annotations.NotNull;
-import repositorio.RepositorioVoo;
+import Model.Dados.Repositorios.RepositorioVoos;
 import java.time.*;
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class Voo {
         this.assento[2] = vagas[0] + vagas[1];
         this.precoBase = calcularPreco();
         this.passagens = new ArrayList<>();
-        RepositorioVoo.adicionarVoo(this);
+        RepositorioVoos.adicionarVoo(this);
     }
 
     public boolean adiarVoo(LocalDateTime data){

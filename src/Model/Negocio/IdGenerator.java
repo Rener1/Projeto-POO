@@ -1,4 +1,4 @@
-package model;
+package Model.Negocio;
 
 public class IdGenerator {
     private static int idAeroporto = -1;

@@ -1,6 +1,6 @@
-package model;
+package Model.Negocio;
 
-import repositorio.RepositorioAeroporto;
+import Model.Dados.Repositorios.RepositorioAeroportos;
 
 public class Aeroporto {
     private String nome;
@@ -11,7 +11,7 @@ public class Aeroporto {
         this.nome = nome;
         this.id = IdGenerator.nextID("aeroporto");
         this.localizacao = localizacao;
-        RepositorioAeroporto.adicionarAeroporto(this);
+        RepositorioAeroportos.adicionar(this);
     }
 
     public Localizacao getLocalizacao(){

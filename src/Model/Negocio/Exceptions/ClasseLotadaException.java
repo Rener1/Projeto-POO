@@ -1,6 +1,6 @@
-package exceptions;
+package Model.Negocio.Exceptions;
 
-import model.Voo;
+import Model.Negocio.Voo;
 
 public class ClasseLotadaException extends Exception{
     private int classe;

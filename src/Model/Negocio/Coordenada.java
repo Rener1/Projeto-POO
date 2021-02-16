@@ -1,4 +1,4 @@
-package model;
+package Model.Negocio;
 
 public class Coordenada {
     private int graus;

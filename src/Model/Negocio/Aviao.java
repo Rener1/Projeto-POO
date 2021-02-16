@@ -1,7 +1,7 @@
-package model;
+package Model.Negocio;
 
 import org.jetbrains.annotations.NotNull;
-import repositorio.RepositorioAviao;
+import Model.Dados.Repositorios.RepositorioAvioes;
 
 public abstract class Aviao {
     protected String modelo;
@@ -17,7 +17,7 @@ public abstract class Aviao {
         this.voo = null;
         this.status = "Parado";
         this.localizacao = localizacao;
-        RepositorioAviao.adicionarAviao(this);
+        RepositorioAvioes.adicionarAviao(this);
     }
 
     public void voar(Voo voo){

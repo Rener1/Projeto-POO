@@ -1,4 +1,4 @@
-package exceptions;
+package Model.Negocio.Exceptions;
 
 import java.time.LocalDateTime;
 

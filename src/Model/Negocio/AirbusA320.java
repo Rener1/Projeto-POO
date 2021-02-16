@@ -1,4 +1,4 @@
-package model;
+package Model.Negocio;
 
 public class AirbusA320 extends Aviao{
     public AirbusA320(Localizacao localizacao){

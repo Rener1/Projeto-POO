@@ -1,4 +1,4 @@
-package model;
+package Model.Negocio;
 
 public class Localizacao {
     private String cidade;
